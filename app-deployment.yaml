@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask-getstart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-flask-getstart
+  template:
+    metadata:
+      labels:
+        app: python-flask-getstart
+    spec:
+      containers:
+      - name: python-flask-getstart
+        image: xrbsx/python-flask-getstart:latest
+        ports:
+        - containerPort: 5000
