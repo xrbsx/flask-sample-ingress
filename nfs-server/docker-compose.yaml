@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nfs-server:
+    image: itsthenetwork/nfs-server-alpine:latest
+    volumes:
+      - ./shared:/shared
+      - ./exports:/etc/exports:ro
+    ports:
+      - "2049:2049"
+    privileged: true
+    environment:
+      - SHARED_DIRECTORY=/shared
+

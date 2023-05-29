@@ -16,24 +16,23 @@ spec:
       - name: install-dependencies
         image: python:3.9-slim
         command: ["/bin/sh", "-c"]
-        args: 
-        - python -m venv /app/venv &&
-          /app/venv/bin/pip install --upgrade pip &&
-          /app/venv/bin/pip install flask
+        args:
+        - pip install flask -t /app &&
+          cp /app.py/app
         volumeMounts:
         - name: app-volume
           mountPath: /app
       containers:
       - name: python-flask-getstart
         image: python:3.9-slim
-        command: ["/app/venv/bin/python"]
+        command: ["python"]
         args: ["/app/app.py"]
         volumeMounts:
         - name: app-volume
-          mountPath: /app
+          mountPath: app
         ports:
         - containerPort: 5000
       volumes:
       - name: app-volume
-        emptyDir: {}
-
+        persistentVolumeClaim:
+          claimName: app-volume-claim
